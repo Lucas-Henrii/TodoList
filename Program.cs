@@ -8,6 +8,8 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseNpgsql("Host=localhost
 
 var app = builder.Build();
 app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+app.UseDefaultFiles(); // Procura automaticamente por index.html
+app.UseStaticFiles();  // Permite carregar CSS, JS e Imagens
 
 //GET
 app.MapGet("/tarefas", async (AppDbContext db) => await db.Tarefas.ToListAsync());
