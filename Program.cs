@@ -45,6 +45,22 @@ app.MapDelete("/tarefas/{id}", async (int id, AppDbContext db) =>
     return Results.Ok();
 });
 
+// Esse bloco garante que o banco de dados seja criado/atualizado no Render
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>(); // Troque 'SeuDbContext' pelo nome do seu Context
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocorreu um erro ao rodar as migrations.");
+    }
+}
+
 app.Run();
 
 public class Tarefa
