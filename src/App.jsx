@@ -118,7 +118,7 @@ function App() {
   return (
     <main>
       <div className="div_header">
-        <h1>TO-DO DASHBOARD</h1>
+        <h1>TO-DO</h1>
         <h2>{hora}</h2>
       </div>
       <div className="div_input">

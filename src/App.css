@@ -10,14 +10,12 @@
     justify-content: space-around;
 }
 
-
 main {
     display: flex;
     flex-direction: column;
     flex: 1; 
     align-items: stretch; 
     justify-content: space-around;
-    background-color: blueviolet;
     padding: 1rem;
     overflow: hidden; 
     display: flex;
@@ -68,7 +66,7 @@ main {
 }
 
 section {
-    background-color: chocolate;
+    background-color: #3B3B3B;
     width: 30%;
     height: 400px;
     display: flex;
@@ -83,12 +81,11 @@ section {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
-    background-color: brown;
+    background-color: #3B3B3B;
     width: 100%;
     flex: 1; 
     overflow-y: auto; 
     margin-top: 1rem;
-    padding: 1rem;
 }
 
 .li_style {
