@@ -4,6 +4,15 @@ import { useState, useEffect } from "react";
 function App() {
   const [tarefas, setTarefas] = useState([]);
   const [valorInput, setValorInput] = useState("");
+  const [hora, setHora] = useState(new Date().toLocaleTimeString());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHora(new Date().toLocaleTimeString());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const listar = async () => {
     const res = await fetch("http://localhost:5137/tarefas");
@@ -99,18 +108,24 @@ function App() {
         style={{ backgroundColor: cor }}
       >
         <span>{tarefa.titulo}</span>
-        <button onClick={() => onDelete(tarefa.id)}>❌</button>
+        <button className="btn_delete" onClick={() => onDelete(tarefa.id)}>
+          🗑️
+        </button>
       </li>
     );
   }
 
   return (
     <main>
-      <h1>TO-DO DASHBOARD</h1>
+      <div className="div_header">
+        <h1>TO-DO DASHBOARD</h1>
+        <h2>{hora}</h2>
+      </div>
       <div className="div_input">
         <input
           type="text"
           className="input_value"
+          placeholder="Digite uma tarefa..."
           value={valorInput}
           onChange={(e) => setValorInput(e.target.value)}
         />{" "}
