@@ -1,0 +1,89 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    align-items: stretch; 
+    justify-content: space-around;
+    background-color: blueviolet;
+    padding: 1rem;
+    gap: 1rem;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+    height: 100vh; 
+    width: 100vw;
+    overflow: hidden;
+}
+
+.div_input{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.input_value {
+    height: 50px;
+    width: 350px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+}
+
+.btn_adicionar{
+    height: 50px;
+    width: 250px;
+}
+
+.div_section{
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+section {
+    background-color: chocolate;
+    width: 30%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.ul_1, .ul_concluido, .ul_emAndamento {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    background-color: brown;
+    width: 100%;
+    flex: 1; 
+    overflow-y: auto; 
+    margin-top: 1rem;
+    padding: 1rem;
+}
+
+.li_style {
+    background-color: aquamarine;
+    height: 150px; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; 
+    border-radius: 5px;
+    color: black;
+}
+

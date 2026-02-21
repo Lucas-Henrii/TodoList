@@ -30,12 +30,22 @@
           ondragleave="removeHighlight(event)"
         ></ul>
       </section>
+      <section>
+        <h3>Em andamento</h3>
+        <ul
+          class="ul_emAndamento"
+          id="lista2"
+          ondrop="drop(event)"
+          ondragover="allowDrop(event)"
+          ondragleave="removeHighlight(event)"
+        ></ul>
+      </section>
 
       <section>
         <h3>Concluído</h3>
         <ul
           class="ul_concluido"
-          id="lista2"
+          id="lista3"
           ondrop="drop(event)"
           ondragover="allowDrop(event)"
           ondragleave="removeHighlight(event)"
@@ -48,7 +58,6 @@
 
     function allowDrop(ev) {
       ev.preventDefault();
-      // Adiciona destaque visual à lista (UL)
       ev.currentTarget.classList.add("drag-over");
     }
 
@@ -57,7 +66,6 @@
     }
 
     function drag(ev) {
-      // Guarda o ID da <li> específica que foi clicada
       ev.dataTransfer.setData("idItem", ev.target.id);
     }
 
@@ -65,30 +73,29 @@
       ev.preventDefault();
       ev.currentTarget.classList.remove("drag-over");
 
-      const id = ev.dataTransfer.getData("idItem"); // Ex: "tarefa-12"
+      const id = ev.dataTransfer.getData("idItem");
       const itemArrastado = document.getElementById(id);
 
-      // 1. Move visualmente o elemento
-      ev.currentTarget.appendChild(itemArrastado);
+      // Acha a lista UL de destino (evita erro se soltar em cima de outro LI)
+      const listaDestino = ev.target.closest("ul");
+      if (!listaDestino) return;
 
-      // 2. Lógica para identificar o novo status
-      // Verificamos se a lista onde soltamos é a de concluídos
-      const isListaConcluido =
-        ev.currentTarget.classList.contains("ul_concluido");
+      listaDestino.appendChild(itemArrastado);
 
-      // 3. Extraímos os dados para a API
-      // Pegamos apenas o número do ID (removendo "tarefa-")
+      // Identifica o status baseado na lista de destino
+      const ehConcluido = listaDestino.classList.contains("ul_concluido");
+      const ehEmAndamento = listaDestino.classList.contains("ul_emAndamento");
+
       const tarefaId = id.replace("tarefa-", "");
-      // Pegamos o texto que está dentro do span
       const tarefaTitulo = itemArrastado.querySelector("span").innerText;
 
-      // 4. Chamamos sua função de atualização
-      // Note que enviamos o status oposto ao que queremos (ou o status final direto)
-      // Se caiu na ul_concluido, enviamos true. Se caiu na ul_1, enviamos false.
-      await alternarConcluido(tarefaId, !isListaConcluido, tarefaTitulo);
-
-      // 5. Opcional: Atualiza a interface sem dar F5
-      // Isso garante que os botões dentro da LI mudem o texto/cor
+      // Enviamos o estado direto, sem precisar calcular "proximo"
+      await salvarAlteracaoStatus(
+        tarefaId,
+        tarefaTitulo,
+        ehConcluido,
+        ehEmAndamento,
+      );
       listar();
     }
 
@@ -96,86 +103,72 @@
       const res = await fetch("http://localhost:5137/tarefas");
       const dados = await res.json();
 
-      const listaPendente = document.querySelector(".ul_1");
-      const listaConcluida = document.querySelector(".ul_concluido");
+      const listas = {
+        pendente: document.querySelector(".ul_1"),
+        andamento: document.querySelector(".ul_emAndamento"),
+        concluida: document.querySelector(".ul_concluido"),
+      };
 
-      // Limpa as duas listas antes de renderizar
-      listaPendente.innerHTML = "";
-      listaConcluida.innerHTML = "";
+      // Limpa todas as listas
+      Object.values(listas).forEach((l) => (l.innerHTML = ""));
 
       dados.forEach((tarefa) => {
-        const corFundo = tarefa.concluida
-          ? "background-color: green;"
-          : "background-color: red;";
-        const html = `
-            <li id="tarefa-${tarefa.id}" class="li_style" style="${corFundo}" draggable="true" ondragstart="drag(event)">
-              
-                <span>${tarefa.titulo}</span>
-                   
-                       
-                <button onclick="deletar(${tarefa.id})">❌ Excluir</button>
-                </li>`;
+        const cor = tarefa.concluida
+          ? "green"
+          : tarefa.emAndamento
+            ? "yellow"
+            : "red";
 
-        // Lógica de separação:
-        if (tarefa.concluida) {
-          listaConcluida.innerHTML += html;
-        } else {
-          listaPendente.innerHTML += html;
-        }
+        const html = `
+            <li id="tarefa-${tarefa.id}" class="li_style" style="background-color: ${cor};" draggable="true" ondragstart="drag(event)">
+                <span>${tarefa.titulo}</span>
+                <button onclick="deletar(${tarefa.id})">❌</button>
+            </li>`;
+
+        if (tarefa.concluida) listas.concluida.innerHTML += html;
+        else if (tarefa.emAndamento) listas.andamento.innerHTML += html;
+        else listas.pendente.innerHTML += html;
+      });
+    }
+
+    // Mudei o nome para salvarAlteracaoStatus para ficar mais claro
+    async function salvarAlteracaoStatus(id, titulo, concluida, emAndamento) {
+      const payload = {
+        Id: parseInt(id),
+        Titulo: titulo,
+        Concluida: concluida,
+        EmAndamento: emAndamento,
+      };
+
+      await fetch(`http://localhost:5137/tarefas/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
     }
 
     async function adicionar() {
-      const valorDigitado = document.getElementById("input_id").value;
-
-      if (valorDigitado == "") {
-        alert("Você precisa digitar algo.");
-
-        return;
-      }
+      const input = document.getElementById("input_id");
+      if (!input.value.trim()) return alert("Digite algo.");
 
       const res = await fetch("http://localhost:5137/tarefas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titulo: valorDigitado }),
+        body: JSON.stringify({ titulo: input.value }),
       });
 
       if (res.ok) {
-        document.getElementById("input_id").value = "";
-        listar();
-      }
-    }
-
-    async function alternarConcluido(id, statusAtual, Titulo) {
-      const novoStatus = !statusAtual;
-
-      const res = await fetch(`http://localhost:5137/tarefas/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          Id: id,
-          Titulo: Titulo,
-          Concluida: novoStatus,
-        }),
-      });
-
-      if (res.ok) {
+        input.value = "";
         listar();
       }
     }
 
     async function deletar(id) {
-      if (!confirm("Tem certeza que deseja excluir esta tarefa?")) return;
-
+      if (!confirm("Excluir tarefa?")) return;
       const res = await fetch(`http://localhost:5137/tarefas/${id}`, {
         method: "DELETE",
       });
-
-      if (res.ok) {
-        listar();
-      } else {
-        alert("Erro ao excluir tarefa.");
-      }
+      if (res.ok) listar();
     }
   </script>
 </html>
