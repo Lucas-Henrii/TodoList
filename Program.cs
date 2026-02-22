@@ -19,8 +19,6 @@ var app = builder.Build();
 
 // 2. CONFIGURAÇÃO DO PIPELINE (Middleware)
 app.UseCors("PermitirTudo");
-app.UseDefaultFiles();
-app.UseStaticFiles();
 
 // --- ROTAS DA API ---
 

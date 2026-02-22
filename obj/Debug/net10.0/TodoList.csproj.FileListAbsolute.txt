@@ -126,10 +126,9 @@ C:\Users\Lucas\Desktop\Projetos\To-do-list\TodoList\obj\Debug\net10.0\compressed
 C:\Users\Lucas\Desktop\Projetos\To-do-list\TodoList\obj\Debug\net10.0\compressed\om8romo6q5-{0}-rvrma32mju-rvrma32mju.gz
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\appsettings.Development.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\appsettings.json
-C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\TodoList.staticwebassets.endpoints.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\package-lock.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\package.json
-C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\TodoList.staticwebassets.runtime.json
+C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\TodoList.staticwebassets.endpoints.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\TodoList.exe
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\TodoList.deps.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\bin\Debug\net10.0\TodoList.runtimeconfig.json
@@ -239,8 +238,6 @@ C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\rjimswa.dswa.cache.js
 C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\scopedcss\bundle\TodoList.styles.css
-C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\compressed\93jl0y1k6m-{0}-4u395nefto-4u395nefto.gz
-C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\compressed\om8romo6q5-{0}-rvrma32mju-rvrma32mju.gz
 C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\Lucas\Desktop\Projetos\TodoList\obj\Debug\net10.0\staticwebassets.development.json
