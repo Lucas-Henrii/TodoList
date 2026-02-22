@@ -95,10 +95,10 @@ function App() {
 
   function Tarefa({ tarefa, onDelete, onMove }) {
     const cor = tarefa.concluida
-      ? "green"
+      ? "#02ca02d6"
       : tarefa.emAndamento
-        ? "yellow"
-        : "red";
+        ? "#ffff00c9"
+        : "#ff3d00e3";
 
     return (
       <li
@@ -128,6 +128,11 @@ function App() {
           placeholder="Digite uma tarefa..."
           value={valorInput}
           onChange={(e) => setValorInput(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              post();
+            }
+          }}
         />{" "}
         <button onClick={post} className="btn_adicionar">
           Adicionar

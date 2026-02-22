@@ -75,10 +75,9 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.Run(); // Inicia o servidor
+app.Run();
 
 // --- MODELOS E CONTEXTO ---
-
 public class Tarefa
 {
     public int Id { get; set; }
